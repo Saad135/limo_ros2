@@ -13,6 +13,7 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import Command, LaunchConfiguration, PythonExpression
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
+from launch_ros.parameter_descriptions import ParameterValue
 
 
 def generate_launch_description():
@@ -77,7 +78,9 @@ def generate_launch_description():
         executable="robot_state_publisher",
         parameters=[
             {
-                "robot_description": Command(["xacro ", urdf_model]),
+                "robot_description": ParameterValue(
+                    Command(["xacro ", urdf_model]), value_type=str
+                ),
                 "use_sim_time": use_sim_time,
             }
         ],
